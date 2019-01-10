@@ -24,17 +24,17 @@
 #(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 #SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-cmake_minimum_required( VERSION 2.8.12 )
+cmake_minimum_required( VERSION 3.5 )
 
 project(archive_cpp_wrapper)
 
-if(NOT libarchive_LIBRARIES)
-  # set defaults for ubuntu
-  set( libarchive_LIBRARIES "/usr/lib/x86_64-linux-gnu/libarchive.so" )
-  set( libarchive_INCLUDE_DIRS "" )
-endif()
+set(CMAKE_CXX_STANDARD 11)
 
-set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
+find_package(LibArchive)
+add_library(LibArchive::LibArchive INTERFACE IMPORTED GLOBAL)
+target_include_directories(LibArchive::LibArchive INTERFACE ${LibArchive_INCLUDE_DIRS})
+target_link_libraries(LibArchive::LibArchive INTERFACE ${LibArchive_LIBRARIES})
+
 
 file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.hpp")
 file(GLOB template_implementations "${CMAKE_CURRENT_SOURCE_DIR}/*.ipp")
@@ -57,7 +57,7 @@ add_library( ${PROJECT_NAME} SHARED
   ${template_implementations}
 )
 
-target_link_libraries( ${PROJECT_NAME} ${libarchive_LIBRARIES} )
+target_link_libraries( ${PROJECT_NAME} PRIVATE LibArchive::LibArchive )
 
 set_target_properties( ${PROJECT_NAME} PROPERTIES VERSION "1.0.0" SOVERSION "1" )
 
@@ -84,3 +84,7 @@ install(
   
   DESTINATION include 
 )
+
+
+# alias target
+add_library(LibArchive::archive_cpp_wrapper ALIAS ${PROJECT_NAME})
