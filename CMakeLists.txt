@@ -39,8 +39,6 @@ target_link_libraries(LibArchive::LibArchive INTERFACE ${LibArchive_LIBRARIES})
 file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.hpp")
 file(GLOB template_implementations "${CMAKE_CURRENT_SOURCE_DIR}/*.ipp")
 
-include_directories( ${libarchive_INCLUDE_DIRS} )
-
 add_library( ${PROJECT_NAME} SHARED
 
   archive_entry.cpp
@@ -58,6 +56,8 @@ add_library( ${PROJECT_NAME} SHARED
 )
 
 target_link_libraries( ${PROJECT_NAME} PRIVATE LibArchive::LibArchive )
+target_include_directories(${PROJECT_NAME} PRIVATE ${libarchive_INCLUDE_DIRS} )
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} )
 
 set_target_properties( ${PROJECT_NAME} PROPERTIES VERSION "1.0.0" SOVERSION "1" )
 
