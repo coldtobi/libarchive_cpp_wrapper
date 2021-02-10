@@ -1,0 +1,11 @@
+The resources in this directory are generated with :
+
+# test1.tar.gz
+
+dd if=/dev/urandom of=file1_random bs=1 count=16k
+dd if=/dev/urandom of=file1_random bs=1 count=16k
+dd if=/dev/zero of=file3_zero bs=1 count=16k
+
+tar czf test1.tar.gz file*
+
+

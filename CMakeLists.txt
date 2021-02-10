@@ -28,6 +28,8 @@ cmake_minimum_required( VERSION 3.5 )
 
 project(archive_cpp_wrapper)
 
+include(CTest)
+
 set(CMAKE_CXX_STANDARD 11)
 
 find_package(LibArchive)
@@ -88,3 +90,6 @@ install(
 
 # alias target
 add_library(LibArchive::archive_cpp_wrapper ALIAS ${PROJECT_NAME})
+
+add_subdirectory(test)
+
