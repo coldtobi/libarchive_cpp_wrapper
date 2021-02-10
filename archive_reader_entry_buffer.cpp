@@ -43,7 +43,7 @@ int entry_buffer::underflow()
 {
   if(gptr() == egptr())
   {
-    size_t _buff_size = archive_read_data(_archive, _buff, _buff_max_size);
+    ssize_t _buff_size = archive_read_data(_archive, _buff, _buff_max_size);
 
     if( _buff_size < 0 )
     {
