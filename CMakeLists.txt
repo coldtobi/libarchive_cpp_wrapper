@@ -30,7 +30,7 @@ project(archive_cpp_wrapper)
 
 set(CMAKE_CXX_STANDARD 11)
 
-find_package(LibArchive)
+find_package(LibArchive REQUIRED)
 if(NOT TARGET LibArchive::LibArchive)
   add_library(LibArchive::LibArchive INTERFACE IMPORTED GLOBAL)
   target_include_directories(LibArchive::LibArchive INTERFACE ${LibArchive_INCLUDE_DIRS})
